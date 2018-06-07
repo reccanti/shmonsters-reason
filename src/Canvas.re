@@ -1,28 +1,23 @@
-type state = {
-    clicked: int,
-    hovered: int,
+
+[@bs.deriving abstract]
+type jsProps = {
+    width: string,
+    height: string
 };
 
-type action =
-| Click
-| Hover;
+[@bs.module "./JsCanvas"] external jsCanvas: ReasonReact.reactClass = "default";
 
-let component = ReasonReact.reducerComponent("Canvas");
-  
-let make = (~width="32", ~height="32", _children) => {
-    ...component,
-    initialState: () => {clicked: 0, hovered: 0},
-    reducer: (action, state) =>
-        switch (action) {
-        | Click => ReasonReact.Update({...state, clicked: state.clicked + 1})
-        | Hover => ReasonReact.Update({...state, hovered: state.hovered + 1})
-        },
-    render: self => {
-        <canvas 
-        width 
-        height 
-        onClick=(_event => self.send(Click)) 
-        onMouseMove=(_event => self.send(Hover)) 
-        /> 
-    },
-}; 
+let make = (
+    ~width="32",
+    ~height="32",
+    children
+) => {
+    ReasonReact.wrapJsForReason(
+        ~reactClass=jsCanvas,
+        ~props=jsProps(
+            ~width="16", 
+            ~height="16"
+        ),
+        children,
+    );
+};
