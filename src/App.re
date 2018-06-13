@@ -3,7 +3,8 @@
 [@bs.module] external logo : string = "./logo.svg";
 
 type route = 
-  | List;
+  | List
+  | Edit;
 
 type action = 
   | ChangeRoute(route);
@@ -22,11 +23,12 @@ let make = (_children) => {
     },
   initialState: () => { route: List },
   render: self => 
-  <div>
-    (
-      switch self.state.route {
-      | List => <MonsterList />
-      }
-    )
-  </div>
+    <div>
+      (
+        switch (self.state.route) {
+        | List => <MonsterList />
+        | Edit => <MonsterEdit />
+        }
+      )
+    </div>,
 };
