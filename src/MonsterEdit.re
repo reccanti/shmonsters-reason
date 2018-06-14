@@ -1,4 +1,4 @@
-/* type field = {
+type field = {
     name: string,
     value: string,
 };
@@ -17,7 +17,7 @@ let component = ReasonReact.reducerComponent("MonsterEdit");
 
 let make = (_children) => {
     ...component,
-    reducer: (action, _state) => {
+    reducer: (action: action, _state: state) => {
         switch(action) {
         | _ => ReasonReact.NoUpdate
         }
@@ -27,14 +27,15 @@ let make = (_children) => {
             { name: "name", value: "" },
             { name: "description", value: ""}
         ]},
-    render: _self => {
-        <div>(ReasonReact.string("hello"))</div>
+    render: self => {
+        <div>
+        (
+            self.state.monster
+            |> List.map(field => <div>(ReasonReact.string(field.name ++ ": " ++ field.value))</div>)
+            |> Array.of_list
+            |> ReasonReact.array
+              
+        )
+        </div>
     }
-} */
-
-let component = ReasonReact.statelessComponent("MonsterEdit");
-
-let make = (_children) => {
-    ...component,
-    render: _self => <div>(ReasonReact.string("ello")</div>)
 }

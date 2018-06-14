@@ -21,7 +21,7 @@ let make = (_children) => {
     switch action {
     | ChangeRoute(route) => ReasonReact.Update({ route: route })
     },
-  initialState: () => { route: List },
+  initialState: () => { route: Edit },
   render: self => 
     <div>
       (
