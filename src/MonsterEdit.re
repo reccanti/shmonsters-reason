@@ -9,7 +9,7 @@ type monster = list(field);
 type state = {monster};
 
 type action =
-  | AddField(field)
+  | AddField
   | UpdateField(field)
   | SaveFields;
 
@@ -19,6 +19,17 @@ let make = _children => {
   ...component,
   reducer: (action: action, state: state) =>
     switch (action) {
+    | AddField =>
+      ReasonReact.Update({
+        monster:
+          [
+            {id: List.length(state.monster), name: "", value: ""},
+            ...state.monster,
+          ]
+          |> List.fast_sort((field1: field, field2: field) =>
+               field1.id > field2.id ? 1 : (-1)
+             ),
+      })
     | UpdateField(field) =>
       ReasonReact.Update({
         monster:
@@ -45,7 +56,7 @@ let make = _children => {
       (
         self.state.monster
         |> List.map(field =>
-             <div>
+             <div key=(string_of_int(field.id))>
                <label>
                  (ReasonReact.string("name"))
                  <input
@@ -89,5 +100,8 @@ let make = _children => {
         |> Array.of_list
         |> ReasonReact.array
       )
+      <button _type="button" onClick=(event => self.send(AddField))>
+        (ReasonReact.string("Add Field"))
+      </button>
     </form>,
 };
