@@ -41,13 +41,32 @@ let make = _children => {
     ],
   },
   render: self =>
-    <div>
+    <form>
       (
         self.state.monster
         |> List.map(field =>
              <div>
                <label>
-                 (ReasonReact.string(field.name ++ ": "))
+                 (ReasonReact.string("name"))
+                 <input
+                   _type="text"
+                   name=field.name
+                   value=field.name
+                   onChange=(
+                     event =>
+                       self.send(
+                         UpdateField({
+                           ...field,
+                           name: ReactDOMRe.domElementToObj(
+                                   ReactEventRe.Form.target(event),
+                                 )##value,
+                         }),
+                       )
+                   )
+                 />
+               </label>
+               <label>
+                 (ReasonReact.string("value"))
                  <input
                    _type="text"
                    name=field.name
@@ -70,5 +89,5 @@ let make = _children => {
         |> Array.of_list
         |> ReasonReact.array
       )
-    </div>,
+    </form>,
 };
