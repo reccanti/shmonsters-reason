@@ -13,6 +13,30 @@ type state = {route};
 
 let component = ReasonReact.reducerComponent("App");
 
+/* Initial State */
+Store.addMonster({
+  id: 0,
+  order: 0,
+  fields: [
+    {id: 0, order: 0, name: "name", value: "LeavesBuscemi"},
+    {
+      id: 1,
+      order: 1,
+      name: "description",
+      value: "Has lovely foliage in the spring",
+    },
+  ],
+});
+
+Store.addMonster({
+  id: 1,
+  order: 1,
+  fields: [
+    {id: 0, order: 0, name: "name", value: "ViewScemi"},
+    {id: 1, order: 1, name: "description", value: "This Buscemi sees all"},
+  ],
+});
+
 let make = _children => {
   ...component,
   reducer: (action, _state) =>
@@ -35,7 +59,7 @@ let make = _children => {
     <div>
       (
         switch (self.state.route) {
-        | List => <MonsterList />
+        | List => <MonsterList monsters=(Store.getAllMonsters()) />
         | Edit => <MonsterEdit />
         }
       )

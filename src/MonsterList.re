@@ -1,27 +1,12 @@
-type monster = {
-  id: int,
-  name: string,
-  description: string,
-};
-
-let testMonsters = [|
-  {id: 0, name: "ViewScemi", description: "This Buscemi can see everything"},
-  {
-    id: 1,
-    name: "Leaves Buscemi",
-    description: "Has lovely foliage in the spring",
-  },
-|];
-
 let component = ReasonReact.statelessComponent("MonsterList");
 
-let make = (~monsters=testMonsters, _children) => {
+let make = (~monsters: list(Store.monster), _children) => {
   ...component,
   render: _self =>
     <ul>
       (
         monsters
-        |> Array.map(monster =>
+        |> List.map((monster: Store.monster) =>
              <li>
                <a
                  href=("/" ++ string_of_int(monster.id) ++ "/edit")
@@ -33,10 +18,16 @@ let make = (~monsters=testMonsters, _children) => {
                      );
                    }
                  )>
-                 (ReasonReact.string(monster.name))
+                 (
+                   ReasonReact.string(
+                     Store.getMonsterField(~id=monster.id, ~fieldName="name").
+                       value,
+                   )
+                 )
                </a>
              </li>
            )
+        |> Array.of_list
         |> ReasonReact.array
       )
     </ul>,
