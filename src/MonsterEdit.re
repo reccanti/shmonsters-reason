@@ -40,34 +40,46 @@ let make = _children => {
     ],
   },
   render: self =>
-    <form>
-      (
-        self.state.monster
-        |> List.map(field =>
-             <div key=(string_of_int(field.id))>
-               <label>
-                 (ReasonReact.string(field.name))
-                 <input
-                   _type="text"
-                   name=field.name
-                   value=field.value
-                   onChange=(
-                     event =>
-                       self.send(
-                         UpdateField({
-                           ...field,
-                           value: ReactDOMRe.domElementToObj(
-                                    ReactEventRe.Form.target(event),
-                                  )##value,
-                         }),
-                       )
-                   )
-                 />
-               </label>
-             </div>
-           )
-        |> Array.of_list
-        |> ReasonReact.array
-      )
-    </form>,
+    <div>
+      <a
+        href="/"
+        onClick=(
+          e => {
+            ReactEventRe.Synthetic.preventDefault(e);
+            ReasonReact.Router.push("/");
+          }
+        )>
+        (ReasonReact.string("<- Back"))
+      </a>
+      <form>
+        (
+          self.state.monster
+          |> List.map(field =>
+               <div key=(string_of_int(field.id))>
+                 <label>
+                   (ReasonReact.string(field.name))
+                   <input
+                     _type="text"
+                     name=field.name
+                     value=field.value
+                     onChange=(
+                       event =>
+                         self.send(
+                           UpdateField({
+                             ...field,
+                             value: ReactDOMRe.domElementToObj(
+                                      ReactEventRe.Form.target(event),
+                                    )##value,
+                           }),
+                         )
+                     )
+                   />
+                 </label>
+               </div>
+             )
+          |> Array.of_list
+          |> ReasonReact.array
+        )
+      </form>
+    </div>,
 };
