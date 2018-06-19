@@ -4,7 +4,7 @@
 
 type route =
   | List
-  | Edit;
+  | Edit(int);
 
 type action =
   | ChangeRoute(route);
@@ -48,7 +48,7 @@ let make = _children => {
     let watcherID =
       ReasonReact.Router.watchUrl(url =>
         switch (url.path) {
-        | [_id, "edit"] => self.send(ChangeRoute(Edit))
+        | [id, "edit"] => self.send(ChangeRoute(Edit(int_of_string(id))))
         | _ => self.send(ChangeRoute(List))
         }
       );
@@ -60,7 +60,7 @@ let make = _children => {
       (
         switch (self.state.route) {
         | List => <MonsterList monsters=(Store.getAllMonsters()) />
-        | Edit => <MonsterEdit />
+        | Edit(id) => <MonsterEdit id />
         }
       )
     </div>,

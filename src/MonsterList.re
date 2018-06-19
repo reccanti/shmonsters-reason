@@ -7,7 +7,7 @@ let make = (~monsters: list(Store.monster), _children) => {
       (
         monsters
         |> List.map((monster: Store.monster) =>
-             <li>
+             <li key=(string_of_int(monster.id))>
                <a
                  href=("/" ++ string_of_int(monster.id) ++ "/edit")
                  onClick=(

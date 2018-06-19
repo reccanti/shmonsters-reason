@@ -33,8 +33,8 @@ let getMonsterField = (~id: int, ~fieldName: string) => {
 
 let updateMonster = (~id: int, newMonster: monster) => {
   store :=
-    List.map(monster => id == newMonster.id ? newMonster : monster, store^);
-  newMonster;
+    List.map(monster => monster.id == id ? newMonster : monster, store^);
+  getMonster(~id=newMonster.id);
 };
 
 let removeMonster = (~id: int) =>
