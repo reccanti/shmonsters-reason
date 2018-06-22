@@ -59,7 +59,7 @@ let make = _children => {
     <div>
       (
         switch (self.state.route) {
-        | List => <MonsterList monsters=(Store.getAllMonsters()) />
+        | List => <MonsterList initialMonsters=(Store.getAllMonsters()) />
         | Edit(id) => <MonsterEdit id />
         }
       )

@@ -1,11 +1,28 @@
-let component = ReasonReact.statelessComponent("MonsterList");
+type state = {monsters: list(Store.monster)};
 
-let make = (~monsters: list(Store.monster), _children) => {
+type action =
+  | AddMonster(string);
+
+let component = ReasonReact.reducerComponent("MonsterList");
+
+let make = (~initialMonsters: list(Store.monster), _children) => {
   ...component,
-  render: _self =>
+  initialState: () => {monsters: initialMonsters},
+  reducer: (action: action, state: state) =>
+    switch (action) {
+    | AddMonster(name) => {
+      Store.addMonster({
+          id: 1,
+          order: 1,
+          fields: [{id: 1, order: 1, name: "name", value: name}],
+        }); 
+        ReasonReact.Update({monsters: Store.getAllMonsters()});
+      }
+    },
+  render: self =>
     <ul>
       (
-        monsters
+        self.state.monsters
         |> List.map((monster: Store.monster) =>
              <li key=(string_of_int(monster.id))>
                <a
