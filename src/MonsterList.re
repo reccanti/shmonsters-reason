@@ -1,22 +1,39 @@
-type state = {monsters: list(Store.monster)};
+type state = {
+  monsters: list(Store.monster), 
+  inputRef: ref(option(Dom.element))
+};
 
 type action =
   | AddMonster(string);
 
 let component = ReasonReact.reducerComponent("MonsterList");
 
+let setInputRef = (theRef, {ReasonReact.state}) =>
+  state.inputRef := Js.Nullable.toOption(theRef);
+
+
+let handleSubmitMonster = (_e, {ReasonReact.state, ReasonReact.send}) => {
+  switch (state.inputRef^) {
+  | Some(element: Dom.element) => send(ReactDOMRe.domElementToObj(element)##value)
+  | _ => ()
+  }
+};
+
 let make = (~initialMonsters: list(Store.monster), _children) => {
   ...component,
-  initialState: () => {monsters: initialMonsters},
+  initialState: () => {monsters: initialMonsters, inputRef: ref(None)},
   reducer: (action: action, state: state) =>
     switch (action) {
     | AddMonster(name) => {
-      Store.addMonster({
+      let _newMonster = Store.addMonster({
           id: 1,
           order: 1,
-          fields: [{id: 1, order: 1, name: "name", value: name}],
+          fields: [
+            {id: 0, order: 0, name: "name", value: name}, 
+            {id: 1, order: 1, name: "description", value: ""}
+          ],
         }); 
-        ReasonReact.Update({monsters: Store.getAllMonsters()});
+        ReasonReact.Update({...state, monsters: Store.getAllMonsters()});
       }
     },
   render: self =>
@@ -47,5 +64,9 @@ let make = (~initialMonsters: list(Store.monster), _children) => {
         |> Array.of_list
         |> ReasonReact.array
       )
+      <li>
+        <input ref={self.handle(setInputRef)} _type="text" name="newMonster" />
+        <button onClick=(self.handle(handleSubmitMonster))>(ReasonReact.string("Add Monster"))</button>
+      </li>
     </ul>,
 };
