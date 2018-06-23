@@ -1,4 +1,11 @@
-type state = {monster: Store.monster};
+type state = {
+  monsterRecord:
+    Store.monsterRecord({
+      .
+      id: int,
+      monster: Store.monster,
+    }),
+};
 
 type action =
   | UpdateField(Store.field)
@@ -11,13 +18,13 @@ let make = (~id: int, _children) => {
   reducer: (action: action, state: state) =>
     switch (action) {
     | UpdateField(field) =>
-      let updatedMonster =
+      let updatedMonsterRecord =
         Store.updateMonster(
-          ~id=state.monster.id,
+          ~id=state.monsterRecord#id,
           {
-            ...state.monster,
+            ...state.monsterRecord#monster,
             fields:
-              state.monster.fields
+              state.monsterRecord#monster.fields
               |> List.map((oldField: Store.field) =>
                    if (oldField.id == field.id) {
                      field;
@@ -27,10 +34,10 @@ let make = (~id: int, _children) => {
                  ),
           },
         );
-      ReasonReact.Update({monster: updatedMonster});
+      ReasonReact.Update({monsterRecord: updatedMonsterRecord});
     | _ => ReasonReact.NoUpdate
     },
-  initialState: () => {monster: Store.getMonster(~id)},
+  initialState: () => {monsterRecord: Store.getMonster(~id)},
   render: self =>
     <div>
       <a
@@ -45,7 +52,7 @@ let make = (~id: int, _children) => {
       </a>
       <form>
         (
-          self.state.monster.fields
+          self.state.monsterRecord#monster.fields
           |> List.map((field: Store.field) =>
                <div key=(string_of_int(field.id))>
                  <label>

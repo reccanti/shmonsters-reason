@@ -1,5 +1,5 @@
 type state = {
-  monsters: list(Store.monster), 
+  monsters: list(Store.monsterRecord({. id: int, monster: Store.monster})), 
   inputRef: ref(option(Dom.element))
 };
 
@@ -19,15 +19,14 @@ let handleSubmitMonster = (_e, {ReasonReact.state, ReasonReact.send}) => {
   }
 };
 
-let make = (~initialMonsters: list(Store.monster), _children) => {
+let make = (~initialMonsters: list(Store.monsterRecord({. id: int, monster: Store.monster})), _children) => {
   ...component,
   initialState: () => {monsters: initialMonsters, inputRef: ref(None)},
   reducer: (action: action, state: state) =>
     switch (action) {
     | AddMonster(name) => {
       let _newMonster = Store.addMonster({
-          id: 1,
-          order: 1,
+          order: List.length(Store.getAllMonsters()),
           fields: [
             {id: 0, order: 0, name: "name", value: name}, 
             {id: 1, order: 1, name: "description", value: ""}
@@ -40,21 +39,21 @@ let make = (~initialMonsters: list(Store.monster), _children) => {
     <ul>
       (
         self.state.monsters
-        |> List.map((monster: Store.monster) =>
-             <li key=(string_of_int(monster.id))>
+        |> List.map((monsterRecord: Store.monsterRecord({. id: int, monster: Store.monster})) =>
+             <li key=(string_of_int(monsterRecord#id))>
                <a
-                 href=("/" ++ string_of_int(monster.id) ++ "/edit")
+                 href=("/" ++ string_of_int(monsterRecord#id) ++ "/edit")
                  onClick=(
                    e => {
                      ReactEventRe.Synthetic.preventDefault(e);
                      ReasonReact.Router.push(
-                       "/" ++ string_of_int(monster.id) ++ "/edit",
+                       "/" ++ string_of_int(monsterRecord#id) ++ "/edit",
                      );
                    }
                  )>
                  (
                    ReasonReact.string(
-                     Store.getMonsterField(~id=monster.id, ~fieldName="name").
+                     Store.getMonsterField(~id=monsterRecord#id, ~fieldName="name").
                        value,
                    )
                  )

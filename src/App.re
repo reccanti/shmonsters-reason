@@ -15,7 +15,6 @@ let component = ReasonReact.reducerComponent("App");
 
 /* Initial State */
 Store.addMonster({
-  id: 0,
   order: 0,
   fields: [
     {id: 0, order: 0, name: "name", value: "LeavesBuscemi"},
@@ -29,7 +28,6 @@ Store.addMonster({
 });
 
 Store.addMonster({
-  id: 1,
   order: 1,
   fields: [
     {id: 0, order: 0, name: "name", value: "ViewScemi"},
