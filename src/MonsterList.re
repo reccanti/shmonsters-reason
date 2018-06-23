@@ -14,7 +14,7 @@ let setInputRef = (theRef, {ReasonReact.state}) =>
 
 let handleSubmitMonster = (_e, {ReasonReact.state, ReasonReact.send}) => {
   switch (state.inputRef^) {
-  | Some(element: Dom.element) => send(ReactDOMRe.domElementToObj(element)##value)
+  | Some(element: Dom.element) => send(AddMonster(ReactDOMRe.domElementToObj(element)##value))
   | _ => ()
   }
 };
