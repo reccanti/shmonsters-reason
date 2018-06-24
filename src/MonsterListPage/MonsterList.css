@@ -16,3 +16,14 @@
     color: white;
     text-decoration: none;
 }
+
+.MonsterList-addField input {
+    border: none;
+    background: none;
+    font-family: inherit;
+    color: white;
+    font-size: inherit;
+    border-bottom: 4px solid white;
+    outline: none;
+    margin: 20px;
+}

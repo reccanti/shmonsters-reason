@@ -23,7 +23,7 @@ let handleSubmitMonster = (_e, onSubmit) =>
 let make = (~onSubmit, _children) => {
   ...component,
   render: _self =>
-    <div>
+    <div className="MonsterList-addField">
       <input ref=setInputRef _type="text" name="newMonster" />
       <button onClick=(_e => handleSubmitMonster(_e, onSubmit))>
         (ReasonReact.string("Add Monster"))
