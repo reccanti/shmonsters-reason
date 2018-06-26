@@ -1,3 +1,4 @@
+[%bs.raw {|require('./AddField.css')|}];
 let component = ReasonReact.statelessComponent("MonsterListAddField");
 
 /**
@@ -23,9 +24,16 @@ let handleSubmitMonster = (_e, onSubmit) =>
 let make = (~onSubmit, _children) => {
   ...component,
   render: _self =>
-    <div className="MonsterList-addField">
-      <input ref=setInputRef _type="text" name="newMonster" />
-      <button onClick=(_e => handleSubmitMonster(_e, onSubmit))>
+    <div className="AddField">
+      <input
+        className="AddField-input"
+        ref=setInputRef
+        _type="text"
+        name="newMonster"
+      />
+      <button
+        className="AddField-button"
+        onClick=(_e => handleSubmitMonster(_e, onSubmit))>
         (ReasonReact.string("Add Monster"))
       </button>
     </div>,
