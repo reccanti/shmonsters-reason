@@ -1,14 +1,7 @@
 [%bs.raw {|require('./MonsterList.css')|}];
 
 type state = {
-  monsters:
-    list(
-      Store.monsterRecord({
-        .
-        id: int,
-        monster: Store.monster,
-      }),
-    ),
+  monsters: list(Store.monsterRecord),
   inputRef: ref(option(Dom.element)),
 };
 
@@ -29,18 +22,7 @@ let setInputRef = (theRef, {ReasonReact.state}) =>
 let handleSubmitMonster = (monsterName: string, {ReasonReact.send}) =>
   send(AddMonster(monsterName));
 
-let make =
-    (
-      ~initialMonsters:
-         list(
-           Store.monsterRecord({
-             .
-             id: int,
-             monster: Store.monster,
-           }),
-         ),
-      _children,
-    ) => {
+let make = (~initialMonsters: list(Store.monsterRecord), _children) => {
   ...component,
   initialState: () => {monsters: initialMonsters, inputRef: ref(None)},
   reducer: (action: action, state: state) =>

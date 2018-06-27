@@ -10,10 +10,16 @@ type monster = {
   fields: list(field),
 };
 
-type monsterRecord('a) = {
+type record('a) = {
   ..
-  id: int
+  id: int,
 } as 'a;
+
+type monsterRecord = record({
+  .
+  id: int,
+  monster: monster
+});
 
 /**
  * Retreive all monsters in the store
@@ -33,12 +39,12 @@ let getMonsterField: (~id: int, ~fieldName: string) => field;
 /**
  * Adds a Monster to the store
  */
-let addMonster: monster => monsterRecord({. id: int, monster});
+let addMonster: monster => monsterRecord;
 
 /**
  * Given a monster's ID, update the monster with the given fields
  */
-let updateMonster: (~id: int, monster) => {. id: int, monster};
+let updateMonster: (~id: int, monster) => monsterRecord;
 
 /**
  * Given a monster's ID, remove it from the list

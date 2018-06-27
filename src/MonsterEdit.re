@@ -1,11 +1,4 @@
-type state = {
-  monsterRecord:
-    Store.monsterRecord({
-      .
-      id: int,
-      monster: Store.monster,
-    }),
-};
+type state = {monsterRecord: Store.monsterRecord};
 
 type action =
   | UpdateField(Store.field)

@@ -10,21 +10,15 @@ type monster = {
   fields: list(field),
 };
 
-type monsterRecord('a) = {.. id: int} as 'a;
+type record('a) = {.. id: int} as 'a;
 
-let store =
-  ref(
-    []:
-        list(
-          monsterRecord({
-            .
-            id: int,
-            monster: monster,
-          }),
-        ),
-  );
+type monsterRecord = record({. id: int, monster: monster})
+/* type monsterRecord('a) = {.. id: int} as 'a;s */
+
+let store = ref([]: list(monsterRecord));
 
 let getAllMonsters = () => store^;
+
 
 /**
  * A helper funcction to get the next highest ID
@@ -38,15 +32,15 @@ let getNextId = () => {
   id^;
 };
 
+/* let saveStateToStorage = (store: ref(list(monsterRecord))) => {
+  let json = Json.Encode.list(store^);
+}; */
+
 /**
  * A helper function to create a monster object
  */
 let createMonsterRecord = (~id: int, ~monster: monster) => {
-  let monsterRecord: monsterRecord({
-    .
-    id: int,
-    monster: monster
-  }) = {
+  let monsterRecord: monsterRecord = {
     pub id = id;
     pub monster = monster;
   };
@@ -56,6 +50,7 @@ let createMonsterRecord = (~id: int, ~monster: monster) => {
 let addMonster = (monster: monster) => {
   let monsterRecord = createMonsterRecord(~id=getNextId(), ~monster);
   store := [monsterRecord, ...store^];
+  /* let _save = saveStateToStorage(store); */
   monsterRecord;
 };
 

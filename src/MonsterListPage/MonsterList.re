@@ -2,32 +2,13 @@ open Utils;
 
 let component = ReasonReact.statelessComponent("MonsterList");
 
-let make =
-    (
-      ~monsters:
-         list(
-           Store.monsterRecord({
-             .
-             id: int,
-             monster: Store.monster,
-           }),
-         ),
-      _children,
-    ) => {
+let make = (~monsters: list(Store.monsterRecord), _children) => {
   ...component,
   render: _self =>
     <ol className="MonsterList">
       (
         monsters
-        |> List.map(
-             (
-               monsterRecord:
-                 Store.monsterRecord({
-                   .
-                   id: int,
-                   monster: Store.monster,
-                 }),
-             ) =>
+        |> List.map((monsterRecord: Store.monsterRecord) =>
              <li
                className="MonsterList-item"
                key=(string_of_int(monsterRecord#id))>
