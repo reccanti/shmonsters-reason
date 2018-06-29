@@ -64,6 +64,29 @@ let cacheStore = (store: list(monsterRecord)) => {
 /**
  * Helper function to decode JSON
  */
+let decodeField = json =>
+  Json.Decode.{
+    id: json |> field("id", int),
+    order: json |> field("order", int),
+    name: json |> field("name", string),
+    value: json |> field("value", string),
+  };
+
+let decodeMonster = json =>
+  Json.Decode.{
+    order: json |> field("order", int),
+    fields: json |> field("fields", list(decodeField)),
+  };
+
+let decodeMonsterRecord = json : monsterRecord => {
+  open Json.Decode;
+  let id = json |> field("id", int);
+  let monster = json |> field("monster", decodeMonster);
+  {pub id = id; pub monster = monster};
+};
+
+let decodeStore = json : list(monsterRecord) =>
+  Json.Decode.(json |> list(decodeMonsterRecord));
 
 /**
  * A helper funcction to get the next highest ID
@@ -123,4 +146,10 @@ let updateMonster = (~id: int, newMonster: monster) => {
 let removeMonster = (~id: int) =>
   store := List.filter(monsterRecord => id != monsterRecord#id, store^);
 
-store^ |> encodeStore |> Json.stringify;
+let jsonString = Dom.Storage.(localStorage |> getItem("store"));
+switch (jsonString) {
+| Some(oldString) =>
+  store := oldString |> Json.parseOrRaise |> decodeStore;
+  ();
+| _ => ()
+};
