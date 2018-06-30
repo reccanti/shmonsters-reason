@@ -140,6 +140,7 @@ let updateMonster = (~id: int, newMonster: monster) => {
         monsterRecord#id == id ? newMonsterRecord : monsterRecord,
       store^,
     );
+  cacheStore(store^);
   getMonster(~id=newMonsterRecord#id);
 };
 
