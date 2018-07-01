@@ -1,0 +1,27 @@
+.MonsterEdit {
+    padding: 20px;
+}
+
+.EditField {
+    width: 100%;
+    margin-top: 1.2rem;
+}
+
+.EditField-label {
+    font-size: 0.8rem;
+    display: block;
+    margin-bottom: 0.4rem;
+}
+
+.EditField-input {
+    width: 100%;
+    border: none;
+    background: none;
+    font-family: inherit;
+    color: white;
+    font-size: inherit;
+    border-bottom: 4px solid white;
+    outline: none;
+    flex: 1;
+    display: block;
+}

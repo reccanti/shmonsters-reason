@@ -1,3 +1,5 @@
+[%bs.raw {|require('./MonsterEdit.css')|}];
+
 type state = {monsterRecord: Store.monsterRecord};
 
 type action =
@@ -32,7 +34,7 @@ let make = (~id: int, _children) => {
     },
   initialState: () => {monsterRecord: Store.getMonster(~id)},
   render: self =>
-    <div>
+    <div className="MonsterEdit">
       <a
         href="/"
         onClick=(
@@ -47,11 +49,14 @@ let make = (~id: int, _children) => {
         (
           self.state.monsterRecord#monster.fields
           |> List.map((field: Store.field) =>
-               <div key=(string_of_int(field.id))>
+               <div className="EditField" key=(string_of_int(field.id))>
                  <label>
-                   (ReasonReact.string(field.name))
+                   <span className="EditField-label">
+                     (ReasonReact.string(field.name))
+                   </span>
                    <input
                      _type="text"
+                     className="EditField-input"
                      name=field.name
                      value=field.value
                      onChange=(
