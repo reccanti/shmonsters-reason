@@ -4,6 +4,7 @@
 
 type route =
   | List
+  | New
   | Edit(int);
 
 type action =
@@ -58,7 +59,8 @@ let make = _children => {
       (
         switch (self.state.route) {
         | List => <MonsterListPage initialMonsters=(Store.getAllMonsters()) />
-        | Edit(id) => <MonsterEdit id />
+        | New => <MonsterEditPage />
+        | Edit(id) => <MonsterEditPage id />
         }
       )
     </div>,
