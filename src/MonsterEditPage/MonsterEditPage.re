@@ -3,6 +3,7 @@
 type state = {monsterRecord: Store.monsterRecord};
 
 type action =
+  | DeleteMonster
   | UpdateField(Store.field)
   | SaveFields;
 
@@ -30,6 +31,11 @@ let handleUpdateField =
   send(UpdateField({...field, value}));
 
 /**
+ * A handler that sends and event to delete a monster
+ */
+let handleDelete = (_, {ReasonReact.send}) => send(DeleteMonster);
+
+/**
  * Get the monster if it exists. If it does not, create an empty monster
  */
 /* let getInitialStateOrEmpty: int = id; */
@@ -45,12 +51,17 @@ let make = (~id=(-1), _children) => {
           createUpdatedMonster(state.monsterRecord#monster, field),
         );
       ReasonReact.Update({monsterRecord: updatedMonsterRecord});
+    | DeleteMonster =>
+      Store.removeMonster(~id);
+      ReasonReact.Router.push("/");
+      ReasonReact.NoUpdate;
     | _ => ReasonReact.NoUpdate
     },
   initialState: () => {monsterRecord: Store.getMonster(~id)},
   render: self =>
     <MonsterEdit
       onUpdateField=(self.handle(handleUpdateField))
+      onClickDelete=(self.handle(handleDelete))
       monster=self.state.monsterRecord#monster
     />,
 };

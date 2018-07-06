@@ -25,3 +25,23 @@
     flex: 1;
     display: block;
 }
+
+.EditField-button {
+    background-color: black;
+    font-size: inherit;
+    color: white;
+    font-family: inherit;
+    border: 4px solid white;
+    padding: 8px;
+    width: 100%;
+    margin-top: 1.2rem;
+}
+
+.EditField-button:hover {
+    background-color: white;
+    color: black;
+}
+
+.EditField-button:focus {
+    outline: 4px dotted white;
+}

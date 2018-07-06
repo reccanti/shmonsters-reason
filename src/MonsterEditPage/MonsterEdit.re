@@ -1,8 +1,13 @@
+/**
+ * A component that handles the main field for editing
+ * a monster
+ */
 open Utils;
 open MonsterEditFields;
 let component = ReasonReact.statelessComponent("MonsterEdit");
 
-let make = (~monster: Store.monster, ~onUpdateField, _children) => {
+let make =
+    (~monster: Store.monster, ~onUpdateField, ~onClickDelete, _children) => {
   ...component,
   render: _self =>
     <div className="MonsterEdit">
@@ -23,5 +28,8 @@ let make = (~monster: Store.monster, ~onUpdateField, _children) => {
           |> ReasonReact.array
         )
       </form>
+      <button className="EditField-button" onClick=(_ => onClickDelete())>
+        (ReasonReact.string("Delete Monster"))
+      </button>
     </div>,
 };
