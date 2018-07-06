@@ -28,7 +28,7 @@ let make = (~initialMonsters: list(Store.monsterRecord), _children) => {
   reducer: (action: action, state: state) =>
     switch (action) {
     | AddMonster(name) =>
-      let _newMonster =
+      let newMonster =
         Store.addMonster({
           order: List.length(Store.getAllMonsters()),
           fields: [
@@ -36,7 +36,15 @@ let make = (~initialMonsters: list(Store.monsterRecord), _children) => {
             {id: 1, order: 1, name: "description", value: ""},
           ],
         });
-      ReasonReact.Update({...state, monsters: Store.getAllMonsters()});
+      ReasonReact.UpdateWithSideEffects(
+        {...state, monsters: Store.getAllMonsters()},
+        (
+          _ =>
+            ReasonReact.Router.push(
+              "/" ++ string_of_int(newMonster#id) ++ "/edit",
+            )
+        ),
+      );
     },
   render: self =>
     <div>
