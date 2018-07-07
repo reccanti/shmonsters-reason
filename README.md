@@ -16,7 +16,7 @@ You can add new monsters by entering a name in the top field. This will then red
 
 ### Edit Monsters
 
-(Coming Soon) - Clicking on a monster will bring you to the Edit page, where you can customize your monster
+Clicking on a monster will bring you to the Edit page, where you can customize your monster
 
 ### Edit Monster Templates
 
