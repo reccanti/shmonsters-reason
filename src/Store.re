@@ -144,8 +144,10 @@ let updateMonster = (~id: int, newMonster: monster) => {
   getMonster(~id=newMonsterRecord#id);
 };
 
-let removeMonster = (~id: int) =>
+let removeMonster = (~id: int) => {
   store := List.filter(monsterRecord => id != monsterRecord#id, store^);
+  cacheStore(store^);
+};
 
 let jsonString = Dom.Storage.(localStorage |> getItem("store"));
 switch (jsonString) {
