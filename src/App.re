@@ -42,7 +42,15 @@ let make = _children => {
     switch (action) {
     | ChangeRoute(route) => ReasonReact.Update({route: route})
     },
-  initialState: () => {route: List},
+  initialState: () => {
+    let url = ReasonReact.Router.dangerouslyGetInitialUrl();
+    let initialRoute =
+      switch (url.path) {
+      | [id, "edit"] => Edit(int_of_string(id))
+      | _ => List
+      };
+    {route: initialRoute};
+  },
   didMount: self => {
     let watcherID =
       ReasonReact.Router.watchUrl(url =>
