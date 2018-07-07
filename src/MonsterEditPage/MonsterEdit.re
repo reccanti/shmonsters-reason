@@ -13,6 +13,7 @@ let make =
     <div className="MonsterEdit">
       <Link url="/"> (ReasonReact.string("<- Back")) </Link>
       <form>
+        <Canvas />
         (
           monster.fields
           |> List.map((field: Store.field) =>

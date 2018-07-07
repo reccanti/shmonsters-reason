@@ -5,13 +5,12 @@
  */
 import React from "react";
 import PropTypes from "prop-types";
-import { request } from "https";
 
 export default class JsCanvas extends React.Component {
 
     static propTypes = {
         width: PropTypes.string.isRequired,
-        height: PropTypes.string.isRequired
+        height: PropTypes.string.isRequired,
     }
 
     state = {
@@ -20,18 +19,20 @@ export default class JsCanvas extends React.Component {
     }
 
     createCanvas = element => {
-        this.setState({
-            canvas: element,
-            context: element.getContext("2d")
-        });
+        if (element) {
+            this.setState({
+                canvas: element,
+                context: element.getContext("2d")
+            });
+        }
     }
 
     handleMouseMove = event => {
         const canvasSize = this.state.canvas.getBoundingClientRect();
-        const mouseX = Math.floor(((event.clientX - this.state.canvas.offsetLeft) / canvasSize.width) * this.props.width);
-        const mouseY = Math.floor(((event.clientY - this.state.canvas.offsetTop) / canvasSize.height) * this.props.height);
+        const mouseX = Math.floor(((event.clientX - canvasSize.left) / canvasSize.width) * this.props.width);
+        const mouseY = Math.floor(((event.clientY - canvasSize.top) / canvasSize.height) * this.props.height);
         this.state.context.clearRect(0, 0, this.props.width, this.props.height);
-        this.state.fillStyle = "gray";
+        this.state.context.fillStyle = "gray";
         this.state.context.fillRect(mouseX, mouseY, 1, 1);
     }
 
@@ -39,7 +40,7 @@ export default class JsCanvas extends React.Component {
         return (
             <canvas
                 ref={this.createCanvas}
-                style={{width: "100%", height: "auto", imageRendering: "pixelated"}}
+                style={{ width: "100%", height: "auto", imageRendering: "pixelated" }}
                 width={this.props.width}
                 height={this.props.height}
                 onMouseMove={this.handleMouseMove}
