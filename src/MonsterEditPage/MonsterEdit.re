@@ -12,25 +12,33 @@ let make =
   render: _self =>
     <div className="MonsterEdit">
       <Link url="/"> (ReasonReact.string("<- Back")) </Link>
-      <form>
-        <Canvas />
-        (
-          monster.fields
-          |> List.map((field: Store.field) =>
-               <div className="EditField" key=(string_of_int(field.id))>
-                 <Text
-                   name=field.name
-                   defaultValue=field.value
-                   onValueChange=(value => onUpdateField((value, field)))
-                 />
-               </div>
-             )
-          |> Array.of_list
-          |> ReasonReact.array
-        )
+      <form className="MonsterEdit-form">
+        <div className="EditField-section"> <Canvas /> </div>
+        <div>
+          <div className="EditField-section">
+            <div className="EditField-fieldList">
+              (
+                monster.fields
+                |> List.map((field: Store.field) =>
+                     <div className="EditField" key=(string_of_int(field.id))>
+                       <Text
+                         name=field.name
+                         defaultValue=field.value
+                         onValueChange=(
+                           value => onUpdateField((value, field))
+                         )
+                       />
+                     </div>
+                   )
+                |> Array.of_list
+                |> ReasonReact.array
+              )
+            </div>
+          </div>
+          <button className="EditField-button" onClick=(_ => onClickDelete())>
+            (ReasonReact.string("Delete Monster"))
+          </button>
+        </div>
       </form>
-      <button className="EditField-button" onClick=(_ => onClickDelete())>
-        (ReasonReact.string("Delete Monster"))
-      </button>
     </div>,
 };

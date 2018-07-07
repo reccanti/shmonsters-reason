@@ -2,9 +2,14 @@
     padding: 20px;
 }
 
+.MonsterEdit-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
 .EditField {
     width: 100%;
-    margin-top: 1.2rem;
+    margin-top: 16px;
 }
 
 .EditField-label {
@@ -37,9 +42,21 @@
     margin-top: 1.2rem;
 }
 
+.EditField-fieldList {
+    margin: 16px;
+}
+
 .EditField-button:hover {
     background-color: white;
     color: black;
+}
+
+.EditField-section {
+    list-style-position: inside;
+    margin: 16px;
+    padding: 0;
+    border: 4px solid white;
+    border-radius: 8px;
 }
 
 .EditField-button:focus {
