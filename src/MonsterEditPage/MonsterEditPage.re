@@ -22,6 +22,9 @@ let createUpdatedMonster = (monster: Store.monster, field: Store.field) => {
        ),
 };
 
+let getInitialDataUrl = monsterRecord =>
+  Store.getMonsterField(monsterRecord#id, "portrait").value;
+
 /**
  * A handler for a text field's change event. Wraps the
  * necessary fields in a tuple and puts them in an UpdateField event
@@ -60,6 +63,7 @@ let make = (~id=(-1), _children) => {
   initialState: () => {monsterRecord: Store.getMonster(~id)},
   render: self =>
     <MonsterEdit
+      initialDataUrl=(getInitialDataUrl(self.state.monsterRecord))
       onUpdateField=(self.handle(handleUpdateField))
       onClickDelete=(self.handle(handleDelete))
       monster=self.state.monsterRecord#monster

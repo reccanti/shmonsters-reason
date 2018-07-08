@@ -11,6 +11,18 @@ export default class JsCanvas extends React.Component {
     static propTypes = {
         width: PropTypes.string.isRequired,
         height: PropTypes.string.isRequired,
+        initialDataUrl: PropTypes.string,
+        onChange: PropTypes.func
+    }
+
+    static defaultProps = {
+        initialDataUrl: "",
+        onChange() { },
+    }
+
+    constructor(props) {
+        super(props);
+        this.state.dataUrl = props.initialDataUrl;
     }
 
     state = {
@@ -25,9 +37,18 @@ export default class JsCanvas extends React.Component {
 
     createDrawingCanvas = element => {
         if (element) {
+            const drawingCanvas = element;
+            const drawingContext = element.getContext("2d");
+
+            // draw the dataURL provided on the canvas
+            const img = new Image();
+            img.onload = () => {
+                drawingContext.drawImage(img, 0, 0);
+            }
+            img.src = this.props.initialDataUrl;
             this.setState({
-                drawingCanvas: element,
-                drawingContext: element.getContext("2d")
+                drawingCanvas,
+                drawingContext
             });
         }
     }
@@ -64,10 +85,12 @@ export default class JsCanvas extends React.Component {
     }
 
     handleMouseUp = event => {
+        const dataUrl = this.state.drawingCanvas.toDataURL("image/png");
         this.setState({
             mouseDown: false,
-            dataUrl: this.state.drawingCanvas.toDataURL("image/png")
+            dataUrl
         });
+        this.props.onChange(dataUrl);
     }
 
     render() {

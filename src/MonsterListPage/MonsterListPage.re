@@ -32,8 +32,9 @@ let make = (~initialMonsters: list(Store.monsterRecord), _children) => {
         Store.addMonster({
           order: List.length(Store.getAllMonsters()),
           fields: [
-            {id: 0, order: 0, name: "name", value: name},
-            {id: 1, order: 1, name: "description", value: ""},
+            {id: 0, order: 0, name: "portrait", value: ""},
+            {id: 1, order: 1, name: "name", value: name},
+            {id: 2, order: 2, name: "description", value: ""},
           ],
         });
       ReasonReact.UpdateWithSideEffects(

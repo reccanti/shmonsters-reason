@@ -7,20 +7,43 @@ open MonsterEditFields;
 let component = ReasonReact.statelessComponent("MonsterEdit");
 
 let make =
-    (~monster: Store.monster, ~onUpdateField, ~onClickDelete, _children) => {
+    (
+      ~monster: Store.monster,
+      ~initialDataUrl="",
+      ~onUpdateField,
+      ~onClickDelete,
+      _children,
+    ) => {
   ...component,
   render: _self =>
     <div className="MonsterEdit">
       <Link url="/"> (ReasonReact.string("<- Back")) </Link>
       <form className="MonsterEdit-form">
         <div className="EditField-section">
-          <Canvas width="56" height="56" />
+          <Canvas
+            width="56"
+            height="56"
+            initialDataUrl
+            onChange=(
+              dataUrl =>
+                onUpdateField((
+                  dataUrl,
+                  monster.fields
+                  |> List.find((field: Store.field) =>
+                       field.name == "portrait"
+                     ),
+                ))
+            )
+          />
         </div>
         <div>
           <div className="EditField-section">
             <div className="EditField-fieldList">
               (
                 monster.fields
+                |> List.filter((field: Store.field) =>
+                     field.name != "portrait"
+                   )  /* Ignore the portrait field, TODO: come up with a better solution */
                 |> List.map((field: Store.field) =>
                      <div className="EditField" key=(string_of_int(field.id))>
                        <Text
