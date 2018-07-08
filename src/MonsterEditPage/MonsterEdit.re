@@ -13,7 +13,9 @@ let make =
     <div className="MonsterEdit">
       <Link url="/"> (ReasonReact.string("<- Back")) </Link>
       <form className="MonsterEdit-form">
-        <div className="EditField-section"> <Canvas /> </div>
+        <div className="EditField-section">
+          <Canvas width="56" height="56" />
+        </div>
         <div>
           <div className="EditField-section">
             <div className="EditField-fieldList">

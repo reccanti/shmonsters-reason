@@ -14,37 +14,80 @@ export default class JsCanvas extends React.Component {
     }
 
     state = {
-        canvas: null,
-        context: null
+        drawingCanvas: null,
+        drawingContext: null,
+        mouseCanvas: null,
+        mouseContext: null,
+        mouseDown: false
     }
 
-    createCanvas = element => {
+    createDrawingCanvas = element => {
         if (element) {
             this.setState({
-                canvas: element,
-                context: element.getContext("2d")
+                drawingCanvas: element,
+                drawingContext: element.getContext("2d")
+            });
+        }
+    }
+
+    createMouseCanvas = element => {
+        if (element) {
+            this.setState({
+                mouseCanvas: element,
+                mouseContext: element.getContext("2d")
             });
         }
     }
 
     handleMouseMove = event => {
-        const canvasSize = this.state.canvas.getBoundingClientRect();
+        // create the hover state
+        const canvasSize = this.state.mouseCanvas.getBoundingClientRect();
         const mouseX = Math.floor(((event.clientX - canvasSize.left) / canvasSize.width) * this.props.width);
         const mouseY = Math.floor(((event.clientY - canvasSize.top) / canvasSize.height) * this.props.height);
-        this.state.context.clearRect(0, 0, this.props.width, this.props.height);
-        this.state.context.fillStyle = "gray";
-        this.state.context.fillRect(mouseX, mouseY, 1, 1);
+        this.state.mouseContext.clearRect(0, 0, this.props.width, this.props.height);
+        this.state.mouseContext.fillStyle = "gray";
+        this.state.mouseContext.fillRect(mouseX, mouseY, 1, 1);
+
+        // draw to the canvas below
+        if (this.state.mouseDown) {
+            this.state.drawingContext.fillStyle = "white";
+            this.state.drawingContext.fillRect(mouseX, mouseY, 1, 1);
+        }
+    }
+
+    handleMouseDown = event => {
+        this.setState({
+            mouseDown: true
+        });
+    }
+
+    handleMouseUp = event => {
+        this.setState({
+            mouseDown: false
+        });
     }
 
     render() {
         return (
-            <canvas
-                ref={this.createCanvas}
-                style={{ width: "100%", height: "auto", imageRendering: "pixelated" }}
-                width={this.props.width}
-                height={this.props.height}
-                onMouseMove={this.handleMouseMove}
-            />
+            <div style={{ position: "relative" }}>
+                {/* Mouse canvas */}
+                <canvas
+                    ref={this.createMouseCanvas}
+                    style={{ width: "100%", height: "auto", imageRendering: "pixelated", position: "absolute" }}
+                    width={this.props.width}
+                    height={this.props.height}
+                    onMouseMove={this.handleMouseMove}
+                    onMouseDown={this.handleMouseDown}
+                    onMouseUp={this.handleMouseUp}
+                />
+                {/* Image canvas */}
+                <canvas
+                    ref={this.createDrawingCanvas}
+                    style={{ width: "100%", height: "auto", imageRendering: "pixelated" }}
+                    width={this.props.width}
+                    height={this.props.height}
+                />
+            </div>
         )
     }
 }
