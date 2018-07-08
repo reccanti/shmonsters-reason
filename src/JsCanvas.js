@@ -18,8 +18,10 @@ export default class JsCanvas extends React.Component {
         drawingContext: null,
         mouseCanvas: null,
         mouseContext: null,
-        mouseDown: false
+        mouseDown: false,
+        dataUrl: ""
     }
+
 
     createDrawingCanvas = element => {
         if (element) {
@@ -63,7 +65,8 @@ export default class JsCanvas extends React.Component {
 
     handleMouseUp = event => {
         this.setState({
-            mouseDown: false
+            mouseDown: false,
+            dataUrl: this.state.drawingCanvas.toDataURL("image/png")
         });
     }
 
