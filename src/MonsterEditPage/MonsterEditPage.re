@@ -23,7 +23,7 @@ let createUpdatedMonster = (monster: Store.monster, field: Store.field) => {
 };
 
 let getInitialDataUrl = monsterRecord =>
-  Store.getMonsterField(monsterRecord#id, "portrait").value;
+  Store.getMonsterField(~id=monsterRecord#id, ~fieldName="portrait").value;
 
 /**
  * A handler for a text field's change event. Wraps the
