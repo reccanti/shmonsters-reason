@@ -1,17 +1,73 @@
+/** 
+ * VARIABLES
+ */
+
 :root {
-    --theme-dark: black;
-    --theme-light: white;
+    --theme--dark: black;
+    --theme--light: white;
     --border-radius: 1rem;
+
+    /** border widths scale by 1px **/
+    --border-width--4: 4px;
+
+    /** spacing widths scale by 4px **/
+    --spacing--4: 4px;
+    --spacing--8: 8px;
+    --spacing--16: 16px;
 }
 
-.background-dark {
-    background: var(--theme-dark);
+/** 
+ * BACKGROUND 
+ */
+
+.background-color--dark {
+    background: var(--theme--dark);
 }
 
-.border-light {
-    border-color: var(--theme-light);
+/**
+ * BORDER
+ */
+
+.border-color--light {
+    border-color: var(--theme--light);
+}
+
+.border-weight--4 {
+    border-width: var(--border-width--4);
+}
+
+.border-style--solid {
+    border-style: solid;
 }
 
 .border-radius {
     border-radius: var(--border-radius);
+}
+
+/**
+ * PADDING
+ */
+
+.padding--4 {
+    padding: var(--spacing--4);
+}
+
+.padding--8 {
+    padding: var(--spacing--8);
+}
+
+.padding--16 {
+    padding: var(--spacing--16);
+}
+
+/**
+ * FONTS
+ */
+
+.font-color--light {
+    color: var(--theme--light)
+}
+
+.font-family--pixel {
+    font-family: 'Press Start 2P', monospace;
 }
