@@ -1,5 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const express = require("express");
 const outputDir = path.join(__dirname, 'build/');
 
 const isProd = process.env.NODE_ENV === 'production';
@@ -21,6 +22,9 @@ module.exports = {
     compress: true,
     contentBase: outputDir,
     port: process.env.PORT || 8000,
-    historyApiFallback: true
+    historyApiFallback: true,
+    setup(app) {
+      app.use("/static/", express.static(path.join(__dirname, "static")));
+    }
   }
 };

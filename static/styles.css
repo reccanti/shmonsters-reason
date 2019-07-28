@@ -1,0 +1,17 @@
+:root {
+    --theme-dark: black;
+    --theme-light: white;
+    --border-radius: 1rem;
+}
+
+.background-dark {
+    background: var(--theme-dark);
+}
+
+.border-light {
+    border-color: var(--theme-light);
+}
+
+.border-radius {
+    border-radius: var(--border-radius);
+}
