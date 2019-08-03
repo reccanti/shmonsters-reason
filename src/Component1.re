@@ -16,6 +16,8 @@ let handleClick = _event => Js.log("clicked!");
    )` */
 [@react.component]
 let make = (~message) =>
-  <Block>
-    <div onClick=handleClick> (ReasonReact.string(message)) </div>
-  </Block>;
+  <Wrapper>
+    <Block>
+      <div onClick=handleClick> (ReasonReact.string(message)) </div>
+    </Block>
+  </Wrapper>;

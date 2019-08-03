@@ -14,6 +14,10 @@
     --spacing--4: 4px;
     --spacing--8: 8px;
     --spacing--16: 16px;
+
+    /** common widths **/
+    --maxWidth--1600: 1600px;
+    --maxWidth--1000: 1000px;
 }
 
 /** 
@@ -70,4 +74,22 @@
 
 .font-family--pixel {
     font-family: 'Press Start 2P', monospace;
+}
+
+/**
+ * MAX WIDTHS
+ */
+.maxWidth--1600 {
+    max-width: var(--maxWidth--1600);
+}
+
+.maxWidth--1000 {
+    max-width: var(--maxWidth--1000);
+}
+
+/**
+ * UTILS
+ */
+.center {
+    margin: 0 auto;
 }
