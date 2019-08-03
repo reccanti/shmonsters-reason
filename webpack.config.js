@@ -7,6 +7,15 @@ const isProd = process.env.NODE_ENV === 'production';
 
 module.exports = {
   entry: './src/Index.bs.js',
+  module: {
+    rules: [
+      {
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        use: ['babel-loader']
+      }
+    ]
+  },
   mode: isProd ? 'production' : 'development',
   output: {
     path: outputDir,
