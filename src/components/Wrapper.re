@@ -4,4 +4,4 @@
 
 [@react.component]
 let make = (~children) =>
-  <main className="maxWidth--1000 center"> children </main>;
+  <main className="maxWidth--1000 center padding--16"> children </main>;
