@@ -93,3 +93,10 @@
 .center {
     margin: 0 auto;
 }
+
+/**
+ * a stack which provides spacing between all child elements
+ */
+.stack--4 > *:not(:first-child) {
+    margin-top: 4rem;
+}
